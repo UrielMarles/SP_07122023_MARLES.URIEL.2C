@@ -11,23 +11,23 @@ namespace MisTest
         [ExpectedException(typeof(FileManagerException))]
         public void AlGuardarUnArchivo_ConNombreInvalido_TengoUnaExcepcion()
         {
-            //arrange
+            string textoGuardado = "textoGuardado";
+            string rutaGuardado = ".txt. 1||@#123 ÑÑÑÑnombre invalido xdxd";
+            bool seAppendea = false;
 
-            //act
-
-            //assert
+            FileManager.Guardar(textoGuardado,rutaGuardado,seAppendea);
         }
 
         [TestMethod]
 
         public void AlInstanciarUnCocinero_SeEspera_PedidosCero()
         {
-            //arrange
 
+            string nombre = "UrielCocinero";
+            Cocinero<Hamburguesa> uriel;
+            uriel = new Cocinero<Hamburguesa>(nombre);
 
-            //act
-
-            //assert
+            Assert.AreEqual(uriel.CantPedidosFinalizados, 0);
         }
     }
 }

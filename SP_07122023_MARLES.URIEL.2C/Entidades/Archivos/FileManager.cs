@@ -42,24 +42,43 @@ namespace Entidades.Files
                     Directory.CreateDirectory(path);
                 }catch (Exception ex)
                 {
-                    throw new FileManagerException("Error al crear el directorio",ex);
+                    FileManager.Guardar(ex.Message, "logs.txt", true);
+                    throw new FileManagerException("Error al crear el directorio base ",ex);
                 }
             }
         }
         public static void Guardar(string data,string nombreArchivo,bool append)
         {
-            string rutaArchivo = Path.Combine(path, nombreArchivo);
-            using (StreamWriter sw = new StreamWriter(rutaArchivo, append))
+            try
             {
-                // Escribir el texto al final del archivo
-                sw.WriteLine(data);
+                string rutaArchivo = Path.Combine(path, nombreArchivo);
+                using (StreamWriter sw = new StreamWriter(rutaArchivo, append))
+                {
+                    // Escribir el texto al final del archivo
+                    sw.WriteLine(data);
+                }
+
+            }catch(Exception ex)
+            {
+                FileManager.Guardar(ex.Message, "logs.txt", true);
+                throw new FileManagerException("Error guardando el archivo", ex);
             }
         }
         public static bool Serializar<T>(T elemento,string nombreArchivo) where T : class
         {
-            string ObjetoSerializado = JsonSerializer.Serialize(elemento);
-            Guardar(ObjetoSerializado, nombreArchivo, false);
-            return true;
+            try
+            {
+                string ObjetoSerializado = JsonSerializer.Serialize(elemento);
+                Guardar(ObjetoSerializado, nombreArchivo, false);
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                FileManager.Guardar(ex.Message, "logs.txt", true);
+                throw new FileManagerException("Error guardando el archivo", ex);
+            }
+
         }
     }
 }

@@ -9,6 +9,6 @@ namespace Entidades.Excepciones
 {
     public class ComidaInvalidaExeption:Exception
     {
-        public ComidaInvalidaExeption(string message):base(message) { FileManager.Guardar(message, "logs.txt", true); }
+        public ComidaInvalidaExeption(string message):base(message) { }
     }
 }

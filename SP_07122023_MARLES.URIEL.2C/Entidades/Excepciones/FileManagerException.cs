@@ -9,7 +9,7 @@ namespace Entidades.Exceptions
 {
     public class FileManagerException : Exception
     {
-        public FileManagerException(string message,Exception innerException): base(message, innerException) { FileManager.Guardar(message, "logs.txt", true); }
+        public FileManagerException(string message,Exception innerException): base(message, innerException) { }
 
     }
 }

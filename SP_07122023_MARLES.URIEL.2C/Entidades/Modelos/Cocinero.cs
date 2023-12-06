@@ -68,8 +68,8 @@ namespace Entidades.Modelos
                     NotificarNuevoIngreso();
                     EsperarProximoIngreso();
                     cantPedidosFinalizados++;
+                    FileManager.Guardar("entra", "entra.txt", true);
                     DataBaseManager.GuardarTicket<T>(nombre, menu);
-
                 }
             }, cancellation.Token);
         }

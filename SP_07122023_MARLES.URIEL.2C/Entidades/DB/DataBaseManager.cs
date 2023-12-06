@@ -1,6 +1,7 @@
 ﻿using System.Data.SqlClient;
 using Entidades.Excepciones;
 using Entidades.Exceptions;
+using Entidades.Files;
 using Entidades.Interfaces;
 
 namespace Entidades.DataBase
@@ -18,21 +19,20 @@ namespace Entidades.DataBase
 
         public static bool GuardarTicket<T>(string nombreEmpleado,T comida) where T : IComestible,new() 
         {
+            connection.Open();
             try
             {
-                string comandoString = "INSERT INTO comidas (empleado, ticket) VALUES (@empleado,@ticket);";
+                string comandoString = "INSERT INTO tickets (empleado, ticket) VALUES (@empleado,@ticket);";
                 SqlCommand comandoObjeto = new SqlCommand();
                 comandoObjeto.CommandType = System.Data.CommandType.Text;
                 comandoObjeto.CommandText = comandoString;
                 comandoObjeto.Connection = connection;
                 comandoObjeto.Parameters.AddWithValue("@empleado", nombreEmpleado);
-                comandoObjeto.Parameters.AddWithValue("@empleado", comida.Ticket);
-            }
-            catch(DataBaseManagerException)
-            {
-                throw;
+                comandoObjeto.Parameters.AddWithValue("@ticket", comida.Ticket);
+                comandoObjeto.ExecuteNonQuery();
             }catch (Exception ex) 
             {
+                FileManager.Guardar(ex.Message, "logs.txt", true);
                 throw new DataBaseManagerException("No se pudo escribir el ticket en la base",ex);
             }
             finally
@@ -45,6 +45,7 @@ namespace Entidades.DataBase
         }
         public static string GetImagenComida(string tipo)
         {
+            connection.Open();
             try
             {
                 string comandoString = "SELECT * FROM comidas WHERE tipo_comida = @tipo ";
@@ -53,30 +54,32 @@ namespace Entidades.DataBase
                 comandoObjeto.CommandText = comandoString;
                 comandoObjeto.Connection = connection;
                 comandoObjeto.Parameters.AddWithValue("@tipo", tipo);
-                connection.Open();
                 using (SqlDataReader lector = comandoObjeto.ExecuteReader())
                 {
                     lector.Read();
                     if (!lector.HasRows)
                     {
-                        throw new DataBaseManagerException("No se encontro una comida de ese tipo");
+                        throw new ComidaInvalidaExeption("No se encontro una comida de ese tipo");
                     }
                     return lector["imagen"].ToString();
                 }
 
             }
-            catch (DataBaseManagerException)
+            catch (ComidaInvalidaExeption dbex)
             {
+                FileManager.Guardar(dbex.Message, "logs.txt", true);
                 throw;
             }
             catch (Exception ex)
             {
-                throw new DataBaseManagerException("Error leyendo la base de datos", ex);
+                FileManager.Guardar(ex.Message, "logs.txt", true);
+                throw new DataBaseManagerException("No se pudo escribir el ticket en la base", ex);
             }
-            finally{
+            finally
+            {
                 connection.Close();
             }
-            
+
         }
     }
 
