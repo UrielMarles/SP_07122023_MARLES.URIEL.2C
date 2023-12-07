@@ -41,6 +41,8 @@
             lblFinalizados = new Label();
             pcbComida = new PictureBox();
             lblProximaComida = new Label();
+            cantPedidos = new Label();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)pcbComida).BeginInit();
             SuspendLayout();
             // 
@@ -59,7 +61,7 @@
             lblTiempo.AutoSize = true;
             lblTiempo.Font = new Font("Segoe UI", 18F, FontStyle.Italic, GraphicsUnit.Point);
             lblTiempo.ForeColor = Color.FromArgb(192, 64, 0);
-            lblTiempo.Location = new Point(711, 174);
+            lblTiempo.Location = new Point(702, 219);
             lblTiempo.Name = "lblTiempo";
             lblTiempo.Size = new Size(87, 32);
             lblTiempo.TabIndex = 5;
@@ -69,7 +71,7 @@
             // 
             lblTitleTiempo.AutoSize = true;
             lblTitleTiempo.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
-            lblTitleTiempo.Location = new Point(610, 138);
+            lblTitleTiempo.Location = new Point(601, 183);
             lblTitleTiempo.Name = "lblTitleTiempo";
             lblTitleTiempo.Size = new Size(305, 32);
             lblTitleTiempo.TabIndex = 4;
@@ -82,7 +84,7 @@
             btnAbrir.FlatAppearance.BorderSize = 0;
             btnAbrir.FlatStyle = FlatStyle.Flat;
             btnAbrir.Image = Properties.Resources.open_icon;
-            btnAbrir.Location = new Point(711, 21);
+            btnAbrir.Location = new Point(725, 12);
             btnAbrir.Name = "btnAbrir";
             btnAbrir.Size = new Size(64, 62);
             btnAbrir.TabIndex = 6;
@@ -167,6 +169,27 @@
             lblProximaComida.TabIndex = 18;
             lblProximaComida.Text = "Proxima Comida:";
             // 
+            // cantPedidos
+            // 
+            cantPedidos.AutoSize = true;
+            cantPedidos.Font = new Font("Segoe UI", 18F, FontStyle.Italic, GraphicsUnit.Point);
+            cantPedidos.ForeColor = Color.FromArgb(192, 64, 0);
+            cantPedidos.Location = new Point(662, 138);
+            cantPedidos.Name = "cantPedidos";
+            cantPedidos.Size = new Size(189, 32);
+            cantPedidos.TabIndex = 19;
+            cantPedidos.Text = "cantidad pedidos";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
+            label2.Location = new Point(601, 101);
+            label2.Name = "label2";
+            label2.Size = new Size(290, 32);
+            label2.TabIndex = 20;
+            label2.Text = "Cantidad pedidos en cola:";
+            // 
             // FrmView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -174,6 +197,8 @@
             BackgroundImage = Properties.Resources.cocinero_icon;
             BackgroundImageLayout = ImageLayout.Center;
             ClientSize = new Size(943, 366);
+            Controls.Add(label2);
+            Controls.Add(cantPedidos);
             Controls.Add(lblProximaComida);
             Controls.Add(btnSiguiente);
             Controls.Add(pcbComida);
@@ -212,5 +237,7 @@
         private Label lblFinalizados;
         private PictureBox pcbComida;
         private Label lblProximaComida;
+        private Label cantPedidos;
+        private Label label2;
     }
 }

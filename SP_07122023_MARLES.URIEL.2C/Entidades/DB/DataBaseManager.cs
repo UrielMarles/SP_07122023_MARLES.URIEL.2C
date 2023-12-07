@@ -13,6 +13,7 @@ namespace Entidades.DataBase
 
         static DataBaseManager()
         {
+            // mi string connection "Data Source=DESKTOP-FT8QR65\\NEWSERVER; Initial Catalog=20230622SP;Integrated Security=True"
             stringConnection = "Data Source=DESKTOP-FT8QR65\\NEWSERVER; Initial Catalog=20230622SP;Integrated Security=True";
             connection = new SqlConnection(stringConnection);   
         }
