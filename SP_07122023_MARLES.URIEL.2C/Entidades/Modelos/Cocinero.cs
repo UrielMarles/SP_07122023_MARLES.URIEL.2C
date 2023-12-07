@@ -43,6 +43,7 @@ namespace Entidades.Modelos
                 if (value && !this.HabilitarCocina)
                 {
                     this.cancellation = new CancellationTokenSource();
+
                     this.IniciarIngreso();
                 }
                 else
@@ -54,7 +55,9 @@ namespace Entidades.Modelos
 
         //no hacer nada
         public double TiempoMedioDePreparacion { get => this.cantPedidosFinalizados == 0 ? 0 : this.demoraPreparacionTotal / this.cantPedidosFinalizados; }
+
         public string Nombre { get => nombre; }
+
         public int CantPedidosFinalizados { get => cantPedidosFinalizados; }
 
 
@@ -66,9 +69,11 @@ namespace Entidades.Modelos
                 while (!cancellation.IsCancellationRequested)
                 {
                     NotificarNuevoIngreso();
+
                     EsperarProximoIngreso();
+
                     cantPedidosFinalizados++;
-                    FileManager.Guardar("entra", "entra.txt", true);
+
                     DataBaseManager.GuardarTicket<T>(nombre, menu);
                 }
             }, cancellation.Token);
@@ -85,21 +90,18 @@ namespace Entidades.Modelos
                 OnIngreso.Invoke(menu);
             }
         }
-        private void EsperarProximoIngreso()
+        private void EsperarProximoIngreso()    
         {
             if (OnDemora != null)
-            {
-                int tiempoEspera = 0;
-
-                while (!menu.Estado && !cancellation.IsCancellationRequested)
+            { 
+                int tiempoActual = 0;
+                while (!cancellation.IsCancellationRequested && !menu.Estado)
                 {
-                    OnDemora.Invoke(tiempoEspera);
-
+                    OnDemora.Invoke(tiempoActual);
                     Thread.Sleep(1000);
-
-                    tiempoEspera += 1;
+                    tiempoActual += 1;
                 }
-                demoraPreparacionTotal += tiempoEspera;
+                demoraPreparacionTotal += tiempoActual;
 
             }
 
